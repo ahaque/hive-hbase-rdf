@@ -7,6 +7,47 @@ Currently, this repository only contains our bulk loader. We are cleaning up our
 
 Files:
 
-src/MRLoad.java - MapReduce bulk loader
+KeyProcessor.jar
+|-- src/DataSetProcessor.java - MapReduce program parses the dataset file and gets the unique subjects.
+|-- src/Transformer.java - Assists in parsing RDF triples.
 
-src/CreateHBaseTable.java - Creates the HBase table
+CreateHBaseTable.jar
+|-- src/CreateHBaseTable.java - Creates the HBase table and specifies HBase parameters.
+
+MRLoad.jar
+|-- src/MRLoad.java - MapReduce program that loads data into the HBase table.
+
+Determine Split Keys & Create HBase Table
+--------------
+Prerequisites:
+* Full dataset file must be located on HDFS
+
+1. Create a list of all unique subjects that appear in the dataset. Depending on the dataset you are running (BSBM or DBPedia), you may have to recreate the KeyProcessor.jar file. Run the command:
+hadoop jar KeyProcessor.jar <INPUT_DATASET_FILE> <OUTPUT_FOLDER>
+
+Example:
+hadoop jar KeyProcessor.jar /data/bsbm_10M.nt /user/hadoop/bsbm-keys
+
+2. Determine the keys that will be used to divide the data evenly among the cluster. Run the command:
+hadoop jar hadoop-core-1.0.4.jar org.apache.hadoop.mapreduce.lib.partition.InputSampler -r <CLUSTER_SIZE> -inFormat org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat -keyClass org.apache.hadoop.io.Text -splitRandom <PROBABILITY> <NUMBER_OF_SAMPLES> <NUMBER_OF_SPLITS_EXAMINED> <PATH_TO_KEYS_ON_HDFS> <OUTPUT_LOCATION>
+
+Example:
+hadoop jar hadoop-core-1.0.4.jar org.apache.hadoop.mapreduce.lib.partition.InputSampler -r 16 -inFormat org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat -keyClass org.apache.hadoop.io.Text -splitRandom 0.1 2000000 200 /dbp-keys /dbp-keyresult
+
+3. Look at the output from the InputSampler. Take these keys and insert them into the CreateHBaseTable.java file. Generate the jar file.
+
+4. Create the HBase table by executing the CreateHBaseTable java/jar file.
+
+5. Create the HBase StoreFiles.
+Run:
+hadoop jar MRLoad.jar <TABLE_NAME> <ZOOKEEPER_QUORUM> <DATASET_FILE> <OUTPUT_DIRECTORY_FOR_STOREFILES>
+
+Example:
+hadoop jar MRLoad.jar rdf1 ec2-23-20-000-00.compute-1.amazonaws.com /MRLoad/input/dataset.nt /MRLoad/output
+
+6. Load the StoreFiles into HBase.
+hbase org.apache.hadoop.hbase.mapreduce.LoadIncrementalHFiles <PATH_TO_STOREFILES> <TABLE_NAME>
+
+hbase org.apache.hadoop.hbase.mapreduce.LoadIncrementalHFiles hdfs:///MRLoad/output rdf1
+
+7. The dataset has now been loaded into HBase.
