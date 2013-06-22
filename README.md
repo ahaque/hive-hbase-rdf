@@ -54,9 +54,11 @@ On Amazon Web Services:
 
 15. Under ‘Action Type’ select ‘Custom Action’
 
-16. For the ‘Amazon S3 Location’ enter: s3://us-east-1.elasticmapreduce/bootstrap-actions/configure-hbase
+16. For the ‘Amazon S3 Location’ enter:
+`s3://us-east-1.elasticmapreduce/bootstrap-actions/configure-hbase`
 
-17. For ‘Optional Arguments’ enter: -s hbase.hregion.max.filesize=10737418240
+17. For ‘Optional Arguments’
+`enter: -s hbase.hregion.max.filesize=10737418240`
 
 18. Click ‘Continue’
 
