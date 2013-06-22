@@ -22,7 +22,6 @@ How-To Guide to Setting Up the Experiment
 ---------------------
 ### HBase+Hive Cluster Setup (Amazon EC2/EMR)
 
-On Amazon Web Services:
 1. Navigate to ‘Your Elastic MapReduce Job Flows’.
 2. Click ‘Create New Job Flow’.
 3. Make sure ‘Run your own application’ is checked.
