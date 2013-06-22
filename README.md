@@ -23,27 +23,49 @@ How-To Guide to Setting Up the Experiment
 HBase+Hive Cluster Setup (Amazon EC2/EMR)
 --------------
 On Amazon Web Services:
+
 1.	Navigate to ‘Your Elastic MapReduce Job Flows’
+
 2.	Click ‘Create New Job Flow’
+
 3.	Make sure ‘Run your own application’ is checked.
+
 4.	In the ‘Choose Job Type’, select ‘HBase’
+
 5.	Click ‘Continue’
+
 6.	Under ‘Install Additional Packages’, check the ‘Hive’ box.
+
 7.	Click ‘Continue’
+
 8.	All instance types should be ‘Large (m1.large)’ by default.
+
 9.	Under ‘Core Instance Group’, enter the number of slave nodes for the cluster (1, 2, 4, 8, or 16 used in this experiment)
+
 10.	‘Task Instance Group’ should be zero.
+
 11.	Click ‘Continue’
+
 12.	Select your EC2 key pair and leave all other options to default.
+
 13.	Click ‘Continue’
+
 14.	Check the box ‘Configure your Bootstrap Actions’
+
 15.	Under ‘Action Type’ select ‘Custom Action’
+
 16.	For the ‘Amazon S3 Location’ enter:
+
 s3://us-east-1.elasticmapreduce/bootstrap-actions/configure-hbase
+
 17.	For ‘Optional Arguments’ enter:
+
 -s hbase.hregion.max.filesize=10737418240
+
 18.	Click ‘Continue’
+
 19.	Review your settings and click ‘Create Job Flow’
+
 20.	The cluster will take 3-5 minutes to fully initialize. 
 
 
