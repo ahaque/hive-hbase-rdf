@@ -4,16 +4,10 @@ hive-hbase-rdf
 An implementation of Hive over HBase to store and query RDF.
 
 Files:
-
-KeyProcessor.jar
 `src/DataSetProcessor.java - MapReduce program parses the dataset file and gets the unique subjects.
-src/Transformer.java - Assists in parsing RDF triples.`
-
-CreateHBaseTable.jar
-`src/CreateHBaseTable.java - Creates the HBase table and specifies HBase parameters.`
-
-MRLoad.jar
-`src/MRLoad.java - MapReduce program that loads data into the HBase table.`
+src/Transformer.java - Assists in parsing RDF triples.
+src/CreateHBaseTable.java - Creates the HBase table and specifies HBase parameters.
+src/MRLoad.java - MapReduce program that loads data into the HBase table.`
 
 
 How-To Guide to Setting Up the Experiment
