@@ -35,32 +35,21 @@ How-To Guide to Setting Up the Experiment
 19. Review your settings and click ‘Create Job Flow’.
 20. The cluster will take 3-5 minutes to fully initialize. 
 
-
 Determine Split Keys & Create HBase Table
 --------------
-Prerequisites:
-Full dataset file must be located on HDFS.
-
-1. Create a list of all unique subjects that appear in the dataset. Depending on the dataset you are running (BSBM or DBPedia), you may have to recreate the KeyProcessor.jar file. Run the command:
-
-hadoop jar KeyProcessor.jar <INPUT_DATASET_FILE> <OUTPUT_FOLDER>
-
-Example: hadoop jar KeyProcessor.jar /data/bsbm_10M.nt /user/hadoop/bsbm-keys
-
-2. Determine the keys that will be used to divide the data evenly among the cluster. Run the command:
-hadoop jar hadoop-core-1.0.4.jar org.apache.hadoop.mapreduce.lib.partition.InputSampler -r <CLUSTER_SIZE> -inFormat org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat -keyClass org.apache.hadoop.io.Text -splitRandom <PROBABILITY> <NUMBER_OF_SAMPLES> <NUMBER_OF_SPLITS_EXAMINED> <PATH_TO_KEYS_ON_HDFS> <OUTPUT_LOCATION>
-
-Example:
-hadoop jar hadoop-core-1.0.4.jar org.apache.hadoop.mapreduce.lib.partition.InputSampler -r 16 -inFormat org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat -keyClass org.apache.hadoop.io.Text -splitRandom 0.1 2000000 200 /dbp-keys /dbp-keyresult
-
-3. Look at the output from the InputSampler. Take these keys and insert them into the CreateHBaseTable.java file. Generate the jar file.
-
-4. Create the HBase table by executing the CreateHBaseTable java/jar file.
-
-5. Create the HBase StoreFiles.
+1. Move the dataset file to a location on HDFS.
+2. Create a list of all unique subjects that appear in the dataset. Depending on the dataset you are running (BSBM or DBPedia), you may have to recreate the KeyProcessor.jar file.
+		Run: `hadoop jar KeyProcessor.jar <INPUT_DATASET_FILE> <OUTPUT_FOLDER>`
+		Example: `hadoop jar KeyProcessor.jar /data/bsbm_10M.nt /user/hadoop/bsbm-keys`
+3. Determine the keys that will be used to divide the data evenly among the cluster.
+		Run: `hadoop jar hadoop-core-1.0.4.jar org.apache.hadoop.mapreduce.lib.partition.InputSampler -r <CLUSTER_SIZE> -inFormat org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat -keyClass org.apache.hadoop.io.Text -splitRandom <PROBABILITY> <NUMBER_OF_SAMPLES> <NUMBER_OF_SPLITS_EXAMINED> <PATH_TO_KEYS_ON_HDFS> <OUTPUT_LOCATION>`
+		Example: `hadoop jar hadoop-core-1.0.4.jar org.apache.hadoop.mapreduce.lib.partition.InputSampler -r 16 -inFormat org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat -keyClass org.apache.hadoop.io.Text -splitRandom 0.1 2000000 200 /dbp-keys /dbp-keyresult`
+4. Look at the output from the InputSampler. Take these keys and insert them into the CreateHBaseTable.java file. Generate the jar file.
+5. Create the HBase table by executing the CreateHBaseTable java/jar file.
+6. Create the HBase StoreFiles.
 		Run: `hadoop jar MRLoad.jar <TABLE_NAME> <ZOOKEEPER_QUORUM> <DATASET_FILE> <OUTPUT_DIRECTORY_FOR_STOREFILES>`
 		Example: `hadoop jar MRLoad.jar rdf1 ec2-23-20-000-00.compute-1.amazonaws.com /MRLoad/input/dataset.nt /MRLoad/output`
-6. Load the StoreFiles into HBase.
+7. Load the StoreFiles into HBase.
 		Run: `hbase org.apache.hadoop.hbase.mapreduce.LoadIncrementalHFiles <PATH_TO_STOREFILES> <TABLE_NAME>`
 		Example: `hbase org.apache.hadoop.hbase.mapreduce.LoadIncrementalHFiles hdfs:///MRLoad/output rdf1`
-7. The dataset has now been loaded into HBase.
+8. The dataset has now been loaded into HBase.
