@@ -1,21 +1,19 @@
 hive-hbase-rdf
 ====================
 
-An implementation of Hive over HBase to store RDF.
-
-Currently, this repository only contains our bulk loader. We are cleaning up our query layer and will commit that soon.
+An implementation of Hive over HBase to store and query RDF.
 
 Files:
 
 KeyProcessor.jar
-|-- src/DataSetProcessor.java - MapReduce program parses the dataset file and gets the unique subjects.
-|-- src/Transformer.java - Assists in parsing RDF triples.
+`src/DataSetProcessor.java - MapReduce program parses the dataset file and gets the unique subjects.
+src/Transformer.java - Assists in parsing RDF triples.`
 
 CreateHBaseTable.jar
-|-- src/CreateHBaseTable.java - Creates the HBase table and specifies HBase parameters.
+`src/CreateHBaseTable.java - Creates the HBase table and specifies HBase parameters.`
 
 MRLoad.jar
-|-- src/MRLoad.java - MapReduce program that loads data into the HBase table.
+`src/MRLoad.java - MapReduce program that loads data into the HBase table.`
 
 
 How-To Guide to Setting Up the Experiment
@@ -47,7 +45,7 @@ How-To Guide to Setting Up the Experiment
 Determine Split Keys & Create HBase Table
 --------------
 Prerequisites:
-Full dataset file must be located on HDFS
+Full dataset file must be located on HDFS.
 
 1. Create a list of all unique subjects that appear in the dataset. Depending on the dataset you are running (BSBM or DBPedia), you may have to recreate the KeyProcessor.jar file. Run the command:
 
