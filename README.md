@@ -58,15 +58,9 @@ hadoop jar hadoop-core-1.0.4.jar org.apache.hadoop.mapreduce.lib.partition.Input
 4. Create the HBase table by executing the CreateHBaseTable java/jar file.
 
 5. Create the HBase StoreFiles.
-Run:
-hadoop jar MRLoad.jar <TABLE_NAME> <ZOOKEEPER_QUORUM> <DATASET_FILE> <OUTPUT_DIRECTORY_FOR_STOREFILES>
-
-Example:
-hadoop jar MRLoad.jar rdf1 ec2-23-20-000-00.compute-1.amazonaws.com /MRLoad/input/dataset.nt /MRLoad/output
-
+		Run: `hadoop jar MRLoad.jar <TABLE_NAME> <ZOOKEEPER_QUORUM> <DATASET_FILE> <OUTPUT_DIRECTORY_FOR_STOREFILES>`
+		Example: `hadoop jar MRLoad.jar rdf1 ec2-23-20-000-00.compute-1.amazonaws.com /MRLoad/input/dataset.nt /MRLoad/output`
 6. Load the StoreFiles into HBase.
-hbase org.apache.hadoop.hbase.mapreduce.LoadIncrementalHFiles <PATH_TO_STOREFILES> <TABLE_NAME>
-
-hbase org.apache.hadoop.hbase.mapreduce.LoadIncrementalHFiles hdfs:///MRLoad/output rdf1
-
+		Run: `hbase org.apache.hadoop.hbase.mapreduce.LoadIncrementalHFiles <PATH_TO_STOREFILES> <TABLE_NAME>`
+		Example: `hbase org.apache.hadoop.hbase.mapreduce.LoadIncrementalHFiles hdfs:///MRLoad/output rdf1`
 7. The dataset has now been loaded into HBase.
