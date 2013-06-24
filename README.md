@@ -11,11 +11,11 @@ An implementation of Hive over HBase to store and query RDF.
 
 ## How-To Guide to Setting Up the Experiment
 ### Table of Contents
-Section 1: HBase+Hive Cluster Setup (Amazon EC2/EMR)
+Section 1: Cluster Setup (Amazon EC2/EMR)
 
-Section 2: Determine Split Keys & Create HBase Table
+Section 2: Loading Data into HBase
 
-### Section 1: HBase+Hive Cluster Setup (Amazon EC2/EMR)
+### Section 1: Cluster Setup (Amazon EC2/EMR)
 
 1. Navigate to ‘Your Elastic MapReduce Job Flows’.
 2. Click ‘Create New Job Flow’.
@@ -38,16 +38,16 @@ Section 2: Determine Split Keys & Create HBase Table
 19. Review your settings and click ‘Create Job Flow’.
 20. The cluster will take 3-5 minutes to fully initialize. 
 
-### Section 2: Determine Split Keys & Create HBase Table
+### Section 2: Loading Data into HBase
 1: Move the dataset file to a location on HDFS.
 
 2: Create a list of all unique subjects that appear in the dataset. Depending on the dataset you are running (BSBM or DBPedia), you may have to recreate the KeyProcessor.jar file.
-> 	hadoop jar KeyProcessor.jar <INPUT_DATASET_FILE> <OUTPUT_FOLDER>
-> 	hadoop jar KeyProcessor.jar /data/bsbm_10M.nt /user/hadoop/bsbm-keys
+ 	hadoop jar KeyProcessor.jar <INPUT_DATASET_FILE> <OUTPUT_FOLDER>
+ 	hadoop jar KeyProcessor.jar /data/bsbm_10M.nt /user/hadoop/bsbm-keys
 
 3: Determine the keys that will be used to divide the data evenly among the cluster.
-> 	hadoop jar hadoop-core-1.0.4.jar org.apache.hadoop.mapreduce.lib.partition.InputSampler -r <CLUSTER_SIZE-inFormat org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat -keyClass org.apache.hadoop.io.Text -splitRandom <PROBABILITY> <NUMBER_OF_SAMPLES> <NUMBER_OF_SPLITS_EXAMINED> <PATH_TO_KEYS_ON_HDFS> <OUTPUT_LOCATION>
-> 	hadoop jar hadoop-core-1.0.4.jar org.apache.hadoop.mapreduce.lib.partition.InputSampler -r 16 -inFormat org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat -keyClass org.apache.hadoop.io.Text -splitRandom 0.1 2000000 200 /dbp-keys /dbp-keyresult`
+ 	hadoop jar hadoop-core-1.0.4.jar org.apache.hadoop.mapreduce.lib.partition.InputSampler -r <CLUSTER_SIZE-inFormat org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat -keyClass org.apache.hadoop.io.Text -splitRandom <PROBABILITY> <NUMBER_OF_SAMPLES> <NUMBER_OF_SPLITS_EXAMINED> <PATH_TO_KEYS_ON_HDFS> <OUTPUT_LOCATION>
+ 	hadoop jar hadoop-core-1.0.4.jar org.apache.hadoop.mapreduce.lib.partition.InputSampler -r 16 -inFormat org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat -keyClass org.apache.hadoop.io.Text -splitRandom 0.1 2000000 200 /dbp-keys /dbp-keyresult`
 
 4: Look at the output from the InputSampler. Take these keys and insert them into the CreateHBaseTable.java file. Generate the jar file.
 
