@@ -11,11 +11,11 @@ An implementation of Hive over HBase to store and query RDF.
 
 ## How-To Guide to Setting Up the Experiment
 ### Table of Contents
-Section 1: HBase+Hive Cluster Setup (Amazon EC2/EMR)
+Section 1: Cluster Setup (Amazon EC2/EMR)
 
-Section 2: Determine Split Keys & Create HBase Table
+Section 2: Loading Data into HBase
 
-### Section 1: HBase+Hive Cluster Setup (Amazon EC2/EMR)
+### Section 1: Cluster Setup (Amazon EC2/EMR)
 
 1. Navigate to ‘Your Elastic MapReduce Job Flows’.
 2. Click ‘Create New Job Flow’.
@@ -38,7 +38,7 @@ Section 2: Determine Split Keys & Create HBase Table
 19. Review your settings and click ‘Create Job Flow’.
 20. The cluster will take 3-5 minutes to fully initialize. 
 
-### Section 2: Determine Split Keys & Create HBase Table
+### Section 2: Loading Data into HBase
 1: Move the dataset file to a location on HDFS.
 
 2: Create a list of all unique subjects that appear in the dataset. Depending on the dataset you are running (BSBM or DBPedia), you may have to recreate the KeyProcessor.jar file.
