@@ -1,18 +1,21 @@
-hive-hbase-rdf
-====================
+# HBase+Hive for RDF
 
 An implementation of Hive over HBase to store and query RDF.
 
-Files:
-    src/DataSetProcessor.java - MapReduce program parses the dataset file and gets the unique subjects.
-    src/Transformer.java - Assists in parsing RDF triples.
-    src/CreateHBaseTable.java - Creates the HBase table and specifies HBase parameters.
-    src/MRLoad.java - MapReduce program that loads data into the HBase table.`
+### Files
+* src/DataSetProcessor.java - MapReduce program parses the dataset file and gets the unique subjects.
+* src/Transformer.java - Assists in parsing RDF triples.
+* src/CreateHBaseTable.java - Creates the HBase table and specifies HBase parameters.
+* src/MRLoad.java - MapReduce program that loads data into the HBase table.
 
 
-How-To Guide to Setting Up the Experiment
----------------------
-### HBase+Hive Cluster Setup (Amazon EC2/EMR)
+## How-To Guide to Setting Up the Experiment
+### Table of Contents
+Section 1: HBase+Hive Cluster Setup (Amazon EC2/EMR)
+
+Section 2: Determine Split Keys & Create HBase Table
+
+### Section 1: HBase+Hive Cluster Setup (Amazon EC2/EMR)
 
 1. Navigate to ‘Your Elastic MapReduce Job Flows’.
 2. Click ‘Create New Job Flow’.
@@ -35,8 +38,7 @@ How-To Guide to Setting Up the Experiment
 19. Review your settings and click ‘Create Job Flow’.
 20. The cluster will take 3-5 minutes to fully initialize. 
 
-Determine Split Keys & Create HBase Table
---------------
+### Section 2: Determine Split Keys & Create HBase Table
 1: Move the dataset file to a location on HDFS.
 
 2: Create a list of all unique subjects that appear in the dataset. Depending on the dataset you are running (BSBM or DBPedia), you may have to recreate the KeyProcessor.jar file.
