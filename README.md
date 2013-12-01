@@ -1,6 +1,6 @@
 # HBase+Hive for RDF
 
-An implementation of Hive over HBase to store and query RDF.
+An implementation of Hive over HBase to store and query RDF
 
 ### Files
 * src/DataSetProcessor.java - MapReduce program parses the dataset file and gets the unique subjects.
