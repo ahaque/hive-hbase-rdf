@@ -4,6 +4,7 @@
 This is an implementation of Hive over HBase to store and query RDF using Hadoop.
 
 This system was part of two academic efforts:
+
 1. P. Cudré-Mauroux, I. Enchev, S. Fundatureanu, P. Groth, A. Haque, A. Harth, F. Keppmann, D. Miranker, J. Sequeda, and M. Wylot. "NoSQL Databases for RDF: An Empirical Evaluation." Proceedings of the 12th International Semantic Web Conference (ISWC). LNCS, vol. 8219, pp. 310-325. Springer, 2013. DOI: 10.1007/978-3-642-41338-4_20. Project Website: http://ribs.csres.utexas.edu/nosqlrdf/index.php
 
 2. A. Haque. "A MapReduce Approach to NoSQL RDF Databases." The University of Texas at Austin, Department of Computer Science. Report# HR-13-1X (honors theses). Dec 2013. 79 pages.
