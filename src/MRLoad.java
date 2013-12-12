@@ -3,15 +3,11 @@ import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.HColumnDescriptor;
-import org.apache.hadoop.hbase.HTableDescriptor;
-import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.io.ImmutableBytesWritable;
 import org.apache.hadoop.hbase.mapreduce.HFileOutputFormat;
 import org.apache.hadoop.hbase.mapreduce.PutSortReducer;
-import org.apache.hadoop.hbase.regionserver.StoreFile.BloomType;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
@@ -19,11 +15,9 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-import org.apache.hadoop.mapreduce.lib.partition.InputSampler;
 
 public class MRLoad {
 	
-	@SuppressWarnings("rawtypes")
 	public static class Map extends
 			Mapper<LongWritable, Text, ImmutableBytesWritable, Put> {
 
@@ -143,7 +137,7 @@ public class MRLoad {
 		return s.replace(">", "").replaceAll(BANNED_CHARACTERS, "_");
 	}
 
-	/*
+
 	static String[] fullName = {
 			"" + "<http://www.w3.org/1999/02/22-rdf-syntax-ns#",
 			"<http://www.w3.org/2000/01/rdf-schema#",
@@ -155,17 +149,17 @@ public class MRLoad {
 
 	static String[] abbrvName = { "rdf_", "rdfs_", "foaf_", "dc_", "xsd_",
 			"rev_", "bsbm_", "bsbm-inst_" };
-			*/
-	static String[] fullName = {
-			"<http://dbpedia.org/resource/",
-			"<http://dbpedia.org/property/",
-			"<http://dbpedia.org/ontology/",
-			"<http://dbpedia.org/class/",
-			"<http://www.w3.org/",
-			"<http://xmlns.com/foaf/0.1/"
-	};
-
-	static String[] abbrvName = {"res_","prop_","ont_","class_","w3_","foaf_"};
+		
+//	static String[] fullName = {
+//			"<http://dbpedia.org/resource/",
+//			"<http://dbpedia.org/property/",
+//			"<http://dbpedia.org/ontology/",
+//			"<http://dbpedia.org/class/",
+//			"<http://www.w3.org/",
+//			"<http://xmlns.com/foaf/0.1/"
+//	};
+//
+//	static String[] abbrvName = {"res_","prop_","ont_","class_","w3_","foaf_"};
 
 	public static Job createMRJob(String[] args) throws Exception {
 		// Create the HBase table

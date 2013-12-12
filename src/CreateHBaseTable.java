@@ -5,7 +5,7 @@ import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.client.HBaseAdmin;
-import org.apache.hadoop.hbase.regionserver.StoreFile.BloomType;
+import org.apache.hadoop.hbase.regionserver.BloomType;
 import org.apache.hadoop.hbase.util.Bytes;
 
 public class CreateHBaseTable {
@@ -16,6 +16,7 @@ public class CreateHBaseTable {
 	 */
 
 	public static byte[][] splitKeys = {
+		Bytes.toBytes("b")
 		// 1000M, 16 nodes
 		//Bytes.toBytes("bsbm_inst_dataFromProducer39975_Product2022415"),
 		//Bytes.toBytes("bsbm_inst_dataFromRatingSite113_Review1136971"),
@@ -86,6 +87,7 @@ public class CreateHBaseTable {
 		//Bytes.toBytes("res_Vasil_Velev"),
 			};
 	
+	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws IOException {
 		String USAGE = "  Arguments: <table name> <column family> <hbase master>";
 		if (args== null) {
