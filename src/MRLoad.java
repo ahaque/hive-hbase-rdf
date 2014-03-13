@@ -18,6 +18,8 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 public class MRLoad {
 	
+	private static String DATA_MODEL = "SOP";
+	
 	public static class Map extends
 			Mapper<LongWritable, Text, ImmutableBytesWritable, Put> {
 
@@ -25,7 +27,13 @@ public class MRLoad {
 				throws IOException, InterruptedException {
 
 			String[] tuple = value.toString().split(" ");
-			String COLUMN_FAMILY = "p";
+			String COLUMN_FAMILY = "";
+			// O=objects as column names, p=predicates as columns
+			if (DATA_MODEL.equals("SOP")) {
+				COLUMN_FAMILY = "o";
+			} else if (DATA_MODEL.equals("SPO")) {
+				COLUMN_FAMILY = "p";
+			}
 
 			// This code was adapted from a non-parallel java loader
 			// Get the subject, predicate, object
@@ -123,7 +131,13 @@ public class MRLoad {
 			}
 
 			Put put = new Put(subject);
-			put.add(Bytes.toBytes(COLUMN_FAMILY), predicate, object);
+			
+			// COLUMN FAMILY, COLUMN QUALIFIER, VALUE
+			if (DATA_MODEL.equals("SOP")) {
+				put.add(Bytes.toBytes(COLUMN_FAMILY), object, predicate);
+			} else if (DATA_MODEL.equals("SPO")) {
+				put.add(Bytes.toBytes(COLUMN_FAMILY), predicate, object); // SPO Data model
+			}
 
 			ImmutableBytesWritable ibKey = new ImmutableBytesWritable(subject);
 			context.write(ibKey, put);
