@@ -87,7 +87,6 @@ public class CreateHBaseTable {
 		//Bytes.toBytes("res_Vasil_Velev"),
 			};
 	
-	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws IOException {
 		String USAGE = "  Arguments: <table name> <column family> <hbase master>";
 		if (args== null) {
